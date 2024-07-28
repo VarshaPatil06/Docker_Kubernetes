@@ -7,7 +7,6 @@ kubectl get svc
 
 2.Check if able to access service using below command
 curl <cluster IP:8000>
-
 3. Check on browser using <node public IP:nodeport>
 4. Ensure that port 8000 is not already in use by another process.
 5. Check the port, targetport and nodeport are configured correctly in YAML file
