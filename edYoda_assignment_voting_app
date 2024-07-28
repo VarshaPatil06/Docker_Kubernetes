@@ -10,6 +10,20 @@ Frontend-->
 Backend-->
 1. New vote pod get created immediately after deletion of Vote pod
 
+Command: 
+kubectl delete po vote-7d884dd585-7kvsb
+
+Result :
+
+root@ip-172-31-32-64:~# kubectl get po
+NAME                      READY   STATUS    RESTARTS   AGE
+db-58cc845644-8njd5       1/1     Running   0          61m
+redis-6878558678-6qhjj    1/1     Running   0          61m
+result-86bc6f7b5d-42dgd   1/1     Running   0          61m
+vote-7d884dd585-vvkfq     1/1     Running   0          90s
+worker-6fc5d5b668-tknp5   1/1     Running   0          61m
+
+*********************************************************************************************************
 
 2nd ► WORKER pod  ► Observe what happens both in frontEnd & in Unix
 
@@ -17,18 +31,51 @@ Frontend-->
 1. No change observed on result page
 2. Voting results are intact
 
-
 Backend-->
 1. New worker pod get created immediately after deletion of worker pod
 
+Command : 
+kubectl delete po worker-6fc5d5b668-tknp5
 
+*********************************************************************************************************
 3rd ► DB pod ► Observe what happens both in frontEnd & in Unix
 
 Frontend--> 
-1. count of Voting results get changed to 1.
+1. count of Voting results app get changed to 1.
 
 
 Backend-->
 1. New DB pod get created immediately after deletion of DB pod
 2. Result Pod and Worker Pod get restarted after deletion of DB pod
 3. Vote Pod remain same  
+
+
+command: 
+kubectl delete po db-58cc845644-jmdn5
+Result:
+NAME                      READY   STATUS    RESTARTS      AGE
+db-58cc845644-2f7wm       1/1     Running   0             29m
+redis-6878558678-6qhjj    1/1     Running   0             104m
+result-86bc6f7b5d-42dgd   1/1     Running   2 (29m ago)   104m
+vote-7d884dd585-vvkfq     1/1     Running   0             45m
+worker-6fc5d5b668-tqgwj   1/1     Running   2 (29m ago)   35m
+
+****************************************************************************************************************
+
+WHY result app STOPPED working after db pod stop
+
+-->
+1.As Kubernetes is Stateless application it doesn't store any data
+2.DB pod is link with result-app and worker pod
+3.When we delete DB pod result pod and worker pod get restarted and DB pod lost the store data in container 
+4.Nwe DB pod created  after deletion which make the application run smoothly
+
+
+*******************************************************************************************************
+
+HOW YOU MADE THE RESULT POD work. 
+-->
+1.Stateful Application can be integrated with Kubernetes (Robin, MongoDB)
+2. StatefulSets maintain data by preserving storage across pod restarts
+
+
