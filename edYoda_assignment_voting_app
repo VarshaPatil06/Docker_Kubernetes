@@ -1,0 +1,34 @@
+# Docker_Kubernetes
+
+1st ► VOTE pod ► Observe what happens both in frontEnd & in Unix
+
+Frontend--> 
+1.No change observed on result page
+2. voter page immediately processed by newly created pod
+3. Voting results are intact
+
+Backend-->
+1. New vote pod get created immediately after deletion of Vote pod
+
+
+2nd ► WORKER pod  ► Observe what happens both in frontEnd & in Unix
+
+Frontend--> 
+1. No change observed on result page
+2. Voting results are intact
+
+
+Backend-->
+1. New worker pod get created immediately after deletion of worker pod
+
+
+3rd ► DB pod ► Observe what happens both in frontEnd & in Unix
+
+Frontend--> 
+1. count of Voting results get changed to 1.
+
+
+Backend-->
+1. New DB pod get created immediately after deletion of DB pod
+2. Result Pod and Worker Pod get restarted after deletion of DB pod
+3. Vote Pod remain same  
