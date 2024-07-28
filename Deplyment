@@ -1,0 +1,13 @@
+Suppose you have deployed your application using a deployment controller. Assume the initial number of replicas is one. Write the steps needed to update a container's image using deployment, making sure that there is zero downtime.
+
+Steps:
+1.List your Deployments: kubectl get deploy
+2.View running Pods: kubectl get pods
+3.Check the current image version: kubectl describe pods <pod name>
+4.Set zero downtime using fllowing command:
+kubectl patch deployment kubia -p '{"spec": {"minReadySeconds": 0}}'
+5.Use the set image command to update the image to version 2
+kubectl set image deployments <deployment name> nodejs=<new image version>
+6.Verify the status of new Pods: kubectl get pods
+7.If there is an issue occurs we can roll back using following command
+kubectl rollout undo deployment <old deployment name>
