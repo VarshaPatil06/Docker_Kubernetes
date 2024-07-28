@@ -1,0 +1,9 @@
+Write a common use-case, where you will use a daemon set instead of replica set.
+
+-->
+ A DaemonSet makes sure it creates one pod on each existing node.
+while ReplicaSet is a Kubernetes resource that ensures its pods are always kept running. It doesn’t guarantee that each node will have a pod; it only ensures the desired replica count.
+
+Usecases:
+1. monitoring resource utilization like CPU, memory, and other metrics on each node.
+2.Ensures storage availability
